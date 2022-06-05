@@ -8,6 +8,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import AppLoading from 'expo-app-loading';
 const Stack = createStackNavigator();
 export default function App() {
+
   return (
     <>
     <NavigationContainer>

@@ -1,10 +1,11 @@
 import React from "react";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED } from "react/cjs/react.development";
 import Header from "./Header";
 import {Container} from '../styles/appStyles'
 import ListItems from "./ListItems";
 import Modal from "./ModalBox";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Home() {
   let [text, setText] = useState("");
@@ -12,7 +13,17 @@ export default function Home() {
   let [display, setDisplay] = useState(false);
   let [edited, setEdited] = useState("");
   let [todos, setTodos] = useState([]);
-  const handleUpdate = () => {
+  let loadAsyncData = async ()=>{
+        let newTodos= await AsyncStorage.getItem('storedItems');
+        if(newTodos!=null)
+        setTodos(JSON.parse(newTodos));
+  }
+  useEffect(() => {
+    loadAsyncData();
+  }, []) 
+
+
+  const handleUpdate = async() => {
     if (text !== "") {
       if (edited !== "") {
         todos.forEach((e) => {
@@ -31,7 +42,12 @@ export default function Home() {
         };
         setTodos([...todos, newTodo]);
       }
-    }
+      
+      await AsyncStorage.setItem('storedItems',JSON.stringify(todos));
+        }
+       
+     
+    
     setDisplay(false);
     setEdited("");
   };

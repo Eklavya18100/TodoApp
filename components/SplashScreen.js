@@ -2,11 +2,14 @@ import React from 'react'
 import {View,Text,Image} from 'react-native'
 import {useEffect} from 'react'
 import {HeaderTitle} from '../styles/appStyles'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function SplashScreen({navigation}) {
     let changeScreen = ()=>{
         setTimeout(()=>{
           navigation.replace('Home');
         },3000);
+        
+
       }
       useEffect(() => {
         changeScreen();
